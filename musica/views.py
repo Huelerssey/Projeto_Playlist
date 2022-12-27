@@ -1,3 +1,9 @@
-from django.shortcuts import render
+"""
+Views from app music
+"""
+from django.views.generic import TemplateView
 
-# Create your views here.
+
+class Homepage(TemplateView):
+    """return basic html template homepage"""
+    template_name = "homepage.html"
