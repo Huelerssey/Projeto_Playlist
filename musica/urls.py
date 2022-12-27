@@ -1,5 +1,5 @@
 """
-urls from aplication music
+urls from app music
 """
 from django.urls import path
 from .views import Homepage
