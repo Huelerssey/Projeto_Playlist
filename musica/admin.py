@@ -1,6 +1,6 @@
 """admin from app musica"""
 from django.contrib import admin
-from .models import Musica
+from .models import Musica, Playlist
 
 admin.site.register(Musica)
-#admin.site.register(Playlist)
+admin.site.register(Playlist)
