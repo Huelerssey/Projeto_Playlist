@@ -1,6 +1,4 @@
-"""
-Views from app music
-"""
+"""Views from app music"""
 from rest_framework import viewsets
 from .models import Musica, Playlist
 from .serializers import MusicaSerializer, PlaylistSerializer
