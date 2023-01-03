@@ -2,32 +2,39 @@
 from django.db import models
 
 
-class Base(models.Model):
+class Artista(models.Model):
     """
-    Clase base que será herdada pelas demais classes
+    Define os artistas que um usuário pode inserir.
 
     param: nome: str
-    param: dt_criacao: int
     """
     nome = models.CharField(max_length=50)
-    dt_criacao = models.DateTimeField(auto_now_add=True)
-
-# Artist -> precisa conter um ID que será relacionado a musica
-
-
-
-# Songs -> precisa conter a musica e o artista
-class Musica(Base):
-    """
-    define musicas e artistas que um usuário pode inserir
-
-    param: artista: str
-    """
-    artista = models.CharField(max_length=50)
+    _dt_criacao = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        """Define o nome do bando de dados e a string no plural"""
-        db_name = 'music'
+        """Define o nome do banco de dados e a string no plural"""
+        db_table = 'artist'
+        verbose_name = 'Artist'
+        verbose_name_plural = 'Artists'
+
+    def __str__(self):
+        return str(self.nome)
+
+
+class Musica(models.Model):
+    """
+    define musicas que um usuário pode inserir.
+
+    param: nome: str
+    param: artista: chave estrangeira
+    """
+    nome = models.CharField(max_length=50)
+    artista = models.ForeignKey("Artista", on_delete=models.CASCADE)
+    _dt_criacao = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        """Define o nome do banco de dados e a string no plural"""
+        db_table = 'music'
         verbose_name = 'Music'
         verbose_name_plural = 'Musics'
 
@@ -35,18 +42,20 @@ class Musica(Base):
         return str(self.nome)
 
 
-# Playlist -> músicas e artistas selecionadas pelo usuário herdando os dois em uma lista
-class Playlist(Base):
+class Playlist(models.Model):
     """
-    Permite ao usuário organizar as músicas e artistas
+    Permite ao usuário organizar as músicas e artistas.
 
-    param: musica: id field
+    param: nome: str
+    param: musicas: chave estrangeira
     """
-    musica = models.ManyToManyField("Musica")
+    nome = models.CharField(max_length=50)
+    musicas = models.ManyToManyField("Musica")
+    _dt_criacao = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         """Define o nome do bando de dados e a string no plural"""
-        db_name = 'playlist'
+        db_table = 'playlist'
         verbose_name = 'Playlist'
         verbose_name_plural = 'playlists'
 
